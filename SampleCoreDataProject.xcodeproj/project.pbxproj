@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A43F1A722E0B463000ADB00 /* ToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A43F1A622E0B463000ADB00 /* ToDoViewController.swift */; };
 		0ADB094922E07FD0004F25EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADB094822E07FD0004F25EA /* AppDelegate.swift */; };
-		0ADB094B22E07FD0004F25EA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADB094A22E07FD0004F25EA /* ViewController.swift */; };
+		0ADB094B22E07FD0004F25EA /* FolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADB094A22E07FD0004F25EA /* FolderViewController.swift */; };
 		0ADB094E22E07FD0004F25EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ADB094C22E07FD0004F25EA /* Main.storyboard */; };
 		0ADB095122E07FD0004F25EA /* SampleCoreDataProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0ADB094F22E07FD0004F25EA /* SampleCoreDataProject.xcdatamodeld */; };
 		0ADB095322E07FD2004F25EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0ADB095222E07FD2004F25EA /* Assets.xcassets */; };
@@ -27,9 +28,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A43F1A622E0B463000ADB00 /* ToDoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoViewController.swift; sourceTree = "<group>"; };
 		0ADB094522E07FD0004F25EA /* SampleCoreDataProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleCoreDataProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ADB094822E07FD0004F25EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0ADB094A22E07FD0004F25EA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0ADB094A22E07FD0004F25EA /* FolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderViewController.swift; sourceTree = "<group>"; };
 		0ADB094D22E07FD0004F25EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0ADB095022E07FD0004F25EA /* SampleCoreDataProject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SampleCoreDataProject.xcdatamodel; sourceTree = "<group>"; };
 		0ADB095222E07FD2004F25EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -80,7 +82,8 @@
 			isa = PBXGroup;
 			children = (
 				0ADB094822E07FD0004F25EA /* AppDelegate.swift */,
-				0ADB094A22E07FD0004F25EA /* ViewController.swift */,
+				0ADB094A22E07FD0004F25EA /* FolderViewController.swift */,
+				0A43F1A622E0B463000ADB00 /* ToDoViewController.swift */,
 				0ADB094C22E07FD0004F25EA /* Main.storyboard */,
 				0ADB095222E07FD2004F25EA /* Assets.xcassets */,
 				0ADB095422E07FD2004F25EA /* LaunchScreen.storyboard */,
@@ -200,7 +203,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0ADB094B22E07FD0004F25EA /* ViewController.swift in Sources */,
+				0A43F1A722E0B463000ADB00 /* ToDoViewController.swift in Sources */,
+				0ADB094B22E07FD0004F25EA /* FolderViewController.swift in Sources */,
 				0ADB094922E07FD0004F25EA /* AppDelegate.swift in Sources */,
 				0ADB095122E07FD0004F25EA /* SampleCoreDataProject.xcdatamodeld in Sources */,
 			);
