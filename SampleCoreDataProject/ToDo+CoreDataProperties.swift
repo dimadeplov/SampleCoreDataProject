@@ -2,7 +2,7 @@
 //  ToDo+CoreDataProperties.swift
 //  SampleCoreDataProject
 //
-//  Created by Dmitry Deplov on 23/07/2019.
+//  Created by Dmitry Deplov on 25/07/2019.
 //  Copyright © 2019 Dmitry Deplov. All rights reserved.
 //
 //
@@ -17,9 +17,9 @@ extension ToDo {
         return NSFetchRequest<ToDo>(entityName: "ToDo")
     }
 
-    @NSManaged public var name: String?
-    @NSManaged public var creationDate: NSDate?
+    @NSManaged public var creationDate: Date
     @NSManaged public var done: Bool
-    @NSManaged public var folder: Folder?
+    @NSManaged public var name: String
+    @NSManaged public var folder: Folder
 
 }

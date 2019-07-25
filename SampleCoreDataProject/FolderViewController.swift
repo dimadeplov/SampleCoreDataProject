@@ -10,14 +10,17 @@ import UIKit
 
 class FolderViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    let dataManager = (UIApplication.shared.delegate as? AppDelegate)!.dataManager
+
     private let folderCellIdentifier = "FolderCell"
 
+    private var folders:[Folder] = []
     
-    
+    @IBOutlet weak var foldersTableView: UITableView!
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        folders = dataManager.getFolders()
     }
 
     
@@ -28,6 +31,12 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
     }
     //MARK: - Private
     
+    private func updateFodlers() {
+        folders = dataManager.getFolders()
+        foldersTableView.reloadData()
+    }
+    
+    
     private func showAddFolderUI() {
         
         let alertController = UIAlertController(title: "Add Folder", message: nil, preferredStyle: .alert)
@@ -35,14 +44,15 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
             textfield.placeholder = "Name"
         }
         
-        let addAction = UIAlertAction(title: "Add", style: .default) { (action) in
-        
+        let addAction = UIAlertAction(title: "Add", style: .default) { [unowned self] (action) in
             print("Add Folder with name \(alertController.textFields?.first?.text ?? "")")
+            guard let folderName = alertController.textFields?.first?.text else { return }
+            self.dataManager.createNewFolder(name: folderName)
+            self.updateFodlers()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(addAction)
         alertController.addAction(cancelAction)
-        //alertController.preferredAction = addAction
 
         present(alertController, animated: true, completion: nil)
     }
@@ -50,11 +60,14 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
     //MARK: - UITableView Data Source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return folders.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: folderCellIdentifier, for: indexPath)
+        let folder = folders[indexPath.item]
+        cell.textLabel?.text = folder.name
+        
         return cell
     }
 
@@ -62,6 +75,8 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
     //MARK: - UITableView Delegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
         
     }
 

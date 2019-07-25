@@ -50,6 +50,11 @@ class CoreDataStack {
         return persistentContainer.viewContext
     }()
     
+    func createBackgroundManagedContext() -> NSManagedObjectContext {
+        
+        return persistentContainer.newBackgroundContext()
+    }
+
     
     // MARK: - Core Data Saving support
     

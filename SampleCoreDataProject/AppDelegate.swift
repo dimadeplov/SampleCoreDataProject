@@ -13,8 +13,12 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    let coreDataStack = CoreDataStack()
-
+    
+    
+    private let coreDataStack = CoreDataStack() 
+    lazy var dataManager = DataManager(context: coreDataStack.managedObjectContext)
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true

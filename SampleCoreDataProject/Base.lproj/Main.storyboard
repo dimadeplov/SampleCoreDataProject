@@ -54,6 +54,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="foldersTableView" destination="iM0-n3-c96" id="HZ9-VG-Qoo"/>
                         <segue destination="Ydk-37-xgt" kind="show" identifier="ShowDetail" id="LRb-3D-llt"/>
                     </connections>
                 </viewController>
