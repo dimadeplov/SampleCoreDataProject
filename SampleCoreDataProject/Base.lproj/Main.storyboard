@@ -55,7 +55,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="foldersTableView" destination="iM0-n3-c96" id="HZ9-VG-Qoo"/>
-                        <segue destination="Ydk-37-xgt" kind="show" identifier="ShowDetail" id="LRb-3D-llt"/>
+                        <segue destination="Ydk-37-xgt" kind="show" identifier="ShowTodos" id="LRb-3D-llt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -84,8 +84,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="Ydk-37-xgt" id="Q9P-YV-i3w"/>
-                                    <outlet property="delegate" destination="Ydk-37-xgt" id="UFT-FJ-aJT"/>
+                                    <outlet property="dataSource" destination="Ydk-37-xgt" id="6UO-pV-cfX"/>
+                                    <outlet property="delegate" destination="Ydk-37-xgt" id="McL-gR-QoA"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -105,6 +105,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="todosTableView" destination="E7g-d3-7qs" id="aVl-ff-NF2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2k9-ce-fcf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

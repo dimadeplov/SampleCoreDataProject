@@ -13,7 +13,8 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
     let dataManager = (UIApplication.shared.delegate as? AppDelegate)!.dataManager
 
     private let folderCellIdentifier = "FolderCell"
-
+    private let todosSegueID = "ShowTodos"
+    
     private var folders:[Folder] = []
     
     @IBOutlet weak var foldersTableView: UITableView!
@@ -73,12 +74,20 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
 
     
     //MARK: - UITableView Delegate
-    
+    var selectedFolder:Folder?
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
-        
+        selectedFolder = folders[indexPath.item]
+        performSegue(withIdentifier: todosSegueID, sender: self)
     }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == todosSegueID) {
+            let toDoVC = (segue.destination as? ToDoViewController)
+            toDoVC?.dataManager = self.dataManager
+            toDoVC?.folder = selectedFolder
 
+        }
+    }
 }
 

@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 
 class DataManager {
+    
     private let mainContext:NSManagedObjectContext
     init(context:NSManagedObjectContext) {
         self.mainContext = context
@@ -23,16 +24,23 @@ class DataManager {
     
     func createNewFolder(name:String) {
         let folderEntity = Folder(context: mainContext)
-    
         folderEntity.name = name
-        folderEntity.creationDate = Date()
+        saveContext(mainContext)
+    }
+    
+    func createNewToDo(name:String, inFolder folder:Folder) {
+        let toDoEntity = ToDo(context: mainContext)
+        toDoEntity.name = name
+        folder.addToTodos(toDoEntity)
         saveContext(mainContext)
     }
     
     
-
-    
-    
+    func fetchResultControllerForFolders() -> NSFetchedResultsController<Folder> {
+        let sortDescriptors = [Folder.primarySortDescriptor()]
+        
+        return fetchResultsControllerFor(Folder.self, sortDescriptors: sortDescriptors) as! NSFetchedResultsController<Folder>
+    }
     
     //MARK: - Private Methods
     
@@ -40,8 +48,6 @@ class DataManager {
     
         let fetchRequest = entityClass.fetchRequest()
         
-        //fetchRequest.sortDescriptors = [NSSortDescriptor(key: "index", ascending: false)]
-
         var entities = [EntityClass]()
         do{
             entities = try self.mainContext.fetch(fetchRequest) as? [EntityClass] ?? []
@@ -51,6 +57,17 @@ class DataManager {
         }
         return entities
     }
+    
+    private func fetchResultsControllerFor<EntityClass:NSManagedObject>(_ entityClass:EntityClass.Type, sortDescriptors:[NSSortDescriptor], predicate:NSPredicate?=nil) -> NSFetchedResultsController<NSFetchRequestResult> {
+        
+        let request = entityClass.fetchRequest()
+        request.sortDescriptors = sortDescriptors
+        request.predicate = predicate
+        
+        return NSFetchedResultsController(fetchRequest: request, managedObjectContext: self.mainContext, sectionNameKeyPath: nil, cacheName: nil)
+    }
+
+    
     
     private func saveContext(_ context:NSManagedObjectContext) {
         context.perform {

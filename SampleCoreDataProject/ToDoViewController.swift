@@ -7,17 +7,20 @@
 //
 
 import UIKit
+import CoreData
 
-class ToDoViewController: UIViewController {
+class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    private let toDoCellIdentifier = "toDoCell"
+    private let toDoCellIdentifier = "ToDoCell"
+    var folder:Folder!
+    var dataManager:DataManager!    
     
-    
+    @IBOutlet weak var todosTableView: UITableView!
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        title = folder.name
+        
     }
     
     //MARK: - Actions
@@ -27,6 +30,11 @@ class ToDoViewController: UIViewController {
     }
     //MARK: - Private
     
+    private func updateTableView() {
+        todosTableView.reloadData()
+    }
+    
+    
     private func showAddToDoUI() {
         
         let alertController = UIAlertController(title: "Add Task", message: nil, preferredStyle: .alert)
@@ -35,13 +43,15 @@ class ToDoViewController: UIViewController {
         }
         
         let addAction = UIAlertAction(title: "Add", style: .default) { (action) in
-            
             print("Add ToDo with name \(alertController.textFields?.first?.text ?? "")")
+            guard let folderName = alertController.textFields?.first?.text else { return }
+            self.dataManager.createNewToDo(name: folderName, inFolder: self.folder)
+            self.updateTableView()
+
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(addAction)
         alertController.addAction(cancelAction)
-        //alertController.preferredAction = addAction
         
         present(alertController, animated: true, completion: nil)
     }
@@ -49,11 +59,15 @@ class ToDoViewController: UIViewController {
     //MARK: - UITableView Data Source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return folder.todos?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: toDoCellIdentifier, for: indexPath)
+    
+        let toDo = folder.getToDoAt(index: indexPath.item)
+        cell.textLabel?.text = toDo?.name
+        cell.accessoryType = (toDo?.done ?? false) ? .checkmark : .none
         return cell
     }
     
@@ -61,7 +75,9 @@ class ToDoViewController: UIViewController {
     //MARK: - UITableView Delegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        guard let toDo = folder.getToDoAt(index: indexPath.item) else {return}
+        toDo.done = !toDo.done
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 
 }
