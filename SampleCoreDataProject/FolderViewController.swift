@@ -7,21 +7,26 @@
 //
 
 import UIKit
+import CoreData
 
-class FolderViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class FolderViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
     
-    let dataManager = (UIApplication.shared.delegate as? AppDelegate)!.dataManager
-
+    weak var dataManager = (UIApplication.shared.delegate as? AppDelegate)!.dataManager
+    var fetchResultsFolderController:NSFetchedResultsController<Folder>!
+    
+    
     private let folderCellIdentifier = "FolderCell"
     private let todosSegueID = "ShowTodos"
     
-    private var folders:[Folder] = []
+    //private var folders:[Folder] = []
     
     @IBOutlet weak var foldersTableView: UITableView!
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        folders = dataManager.getFolders()
+        //folders = dataManager.getFolders()
+        
+        prepareFetchedResultController()
     }
 
     
@@ -32,8 +37,23 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
     }
     //MARK: - Private
     
+    private func prepareFetchedResultController() {
+        
+        fetchResultsFolderController = dataManager?.fetchResultControllerForFolders()
+        fetchResultsFolderController.delegate = self
+        
+        do {
+            try fetchResultsFolderController.performFetch()
+        }
+        catch {
+            print("Failed to fetch with fetchResultsFolderCotnroller: \(error)")
+        }
+    }
+    
+    
+    
     private func updateFodlers() {
-        folders = dataManager.getFolders()
+        //folders = dataManager.getFolders()
         foldersTableView.reloadData()
     }
     
@@ -48,8 +68,8 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
         let addAction = UIAlertAction(title: "Add", style: .default) { [unowned self] (action) in
             print("Add Folder with name \(alertController.textFields?.first?.text ?? "")")
             guard let folderName = alertController.textFields?.first?.text else { return }
-            self.dataManager.createNewFolder(name: folderName)
-            self.updateFodlers()
+            self.dataManager?.createNewFolder(name: folderName)
+            //self.updateFodlers()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(addAction)
@@ -61,12 +81,13 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
     //MARK: - UITableView Data Source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return folders.count
+        return fetchResultsFolderController.sections?[section].numberOfObjects ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: folderCellIdentifier, for: indexPath)
-        let folder = folders[indexPath.item]
+        
+        let folder = fetchResultsFolderController.object(at: indexPath)
         cell.textLabel?.text = folder.name
         
         return cell
@@ -74,18 +95,25 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
 
     
     //MARK: - UITableView Delegate
-    var selectedFolder:Folder?
+    //var selectedFolder:Folder?
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedFolder = folders[indexPath.item]
+        //selectedFolder = fetchResultsFolderController.object(at: indexPath)
         performSegue(withIdentifier: todosSegueID, sender: self)
     }
     
     
+    //MARK: - Fetched Results Controller Delegate
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        foldersTableView.reloadData()
+    }
+    
+    
+    //MARK: -
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == todosSegueID) {
             let toDoVC = (segue.destination as? ToDoViewController)
             toDoVC?.dataManager = self.dataManager
-            toDoVC?.folder = selectedFolder
+            toDoVC?.folder = fetchResultsFolderController.object(at: foldersTableView.indexPathForSelectedRow!)
 
         }
     }

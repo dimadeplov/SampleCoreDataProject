@@ -12,8 +12,8 @@ import CoreData
 class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     private let toDoCellIdentifier = "ToDoCell"
-    var folder:Folder!
-    var dataManager:DataManager!    
+    weak var folder:Folder!
+    weak var dataManager:DataManager!    
     
     @IBOutlet weak var todosTableView: UITableView!
     //MARK: Lifecycle
