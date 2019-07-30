@@ -95,9 +95,7 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
 
     
     //MARK: - UITableView Delegate
-    //var selectedFolder:Folder?
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //selectedFolder = fetchResultsFolderController.object(at: indexPath)
         performSegue(withIdentifier: todosSegueID, sender: self)
     }
     

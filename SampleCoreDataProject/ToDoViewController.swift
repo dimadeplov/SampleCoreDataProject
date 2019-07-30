@@ -26,7 +26,7 @@ class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK: - Actions
     
     @IBAction func addNewTodo(_ sender: Any) {
-        showAddToDoUI()
+        showToDoListUpdateUI(option: .new)
     }
     //MARK: - Private
     
@@ -34,27 +34,63 @@ class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDe
         todosTableView.reloadData()
     }
     
+    private enum UpdateUIOption {
+        case new, edit
+    }
     
-    private func showAddToDoUI() {
+    private func showToDoListUpdateUI(option: UpdateUIOption, todo:ToDo? = nil) {
         
-        let alertController = UIAlertController(title: "Add Task", message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+
+        let alertTitle:String
+        let defaultAction: UIAlertAction
+        switch option {
+        case .new:
+            alertTitle = "Add Task"
+            defaultAction = UIAlertAction(title: "Add", style: .default) { [unowned self](action) in
+                guard let todoName = alertController.textFields?.first?.text else { return }
+                self.dataManager.createNewToDo(name: todoName, inFolder: self.folder)
+                self.updateTableView()
+            }
+            
+        case .edit:
+            alertTitle = "Edit Task"
+            defaultAction = UIAlertAction(title: "Save", style: .default) { [unowned self](action) in
+                guard let todo = todo, let todoName = alertController.textFields?.first?.text else { return }
+                self.dataManager.updateToDo(todo, newName: todoName)
+                self.updateTableView()
+            }
+        }
+     
+        alertController.title = alertTitle
         alertController.addTextField { (textfield) in
             textfield.placeholder = "Name"
+            if let todo = todo {
+                textfield.text = todo.name
+            }
         }
         
-        let addAction = UIAlertAction(title: "Add", style: .default) { (action) in
-            print("Add ToDo with name \(alertController.textFields?.first?.text ?? "")")
-            guard let folderName = alertController.textFields?.first?.text else { return }
-            self.dataManager.createNewToDo(name: folderName, inFolder: self.folder)
-            self.updateTableView()
-
-        }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alertController.addAction(addAction)
+        alertController.addAction(defaultAction)
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true, completion: nil)
     }
+    
+    //Edit, Delete Actions Support
+    private func deleteActionHandler(actionView:UITableViewRowAction, indexPath:IndexPath) -> Void {
+        guard let todo = folder.getToDoAt(index: indexPath.item) else { return }
+        folder = self.dataManager.deleteToDo(todo)
+        todosTableView.deleteRows(at: [indexPath], with: .automatic)
+
+    }
+    
+    private func editActionHandler(actionView:UITableViewRowAction, indexPath:IndexPath) -> Void {
+        
+        guard let todo = folder.getToDoAt(index: indexPath.item) else { return }
+        showToDoListUpdateUI(option: .edit, todo: todo)
+    }
+    
     
     //MARK: - UITableView Data Source
     
@@ -77,7 +113,23 @@ class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let toDo = folder.getToDoAt(index: indexPath.item) else {return}
         toDo.done = !toDo.done
-        tableView.reloadRows(at: [indexPath], with: .automatic)
+        tableView.reloadData()//.reloadRows(at: [indexPath], with: .automatic)
     }
+    
+    
+    //MARK: Edit, Delete
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: deleteActionHandler)
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit", handler: editActionHandler)
+        return [deleteAction, editAction]
+    }
+    
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+
 
 }

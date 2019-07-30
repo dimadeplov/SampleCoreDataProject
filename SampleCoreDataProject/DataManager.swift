@@ -42,6 +42,21 @@ class DataManager {
         return fetchResultsControllerFor(Folder.self, sortDescriptors: sortDescriptors) as! NSFetchedResultsController<Folder>
     }
     
+    func deleteToDo(_ todo:ToDo) -> Folder {
+        let folder = todo.folder
+        folder.removeFromTodos(todo)
+        
+        mainContext.delete(todo)
+        saveContext(mainContext)
+        return folder
+    }
+    
+    func updateToDo(_ todo:ToDo, newName name:String) {
+        todo.name = name
+        saveContext(mainContext)
+    }
+    
+    
     //MARK: - Private Methods
     
     private func getEntities<EntityClass:NSManagedObject>(_ entityClass:EntityClass.Type) -> [EntityClass] {
