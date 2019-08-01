@@ -3,7 +3,7 @@
     <entity name="Folder" representedClassName="Folder" syncable="YES">
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
-        <relationship name="todos" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ToDo" inverseName="folder" inverseEntity="ToDo" syncable="YES"/>
+        <relationship name="todos" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ToDo" inverseName="folder" inverseEntity="ToDo" syncable="YES"/>
     </entity>
     <entity name="ToDo" representedClassName="ToDo" syncable="YES">
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>

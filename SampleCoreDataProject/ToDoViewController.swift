@@ -9,6 +9,12 @@
 import UIKit
 import CoreData
 
+extension UIViewController {
+    enum UpdateUIOption {
+        case new, edit
+    }
+}
+
 class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     private let toDoCellIdentifier = "ToDoCell"
@@ -34,9 +40,7 @@ class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDe
         todosTableView.reloadData()
     }
     
-    private enum UpdateUIOption {
-        case new, edit
-    }
+    
     
     private func showToDoListUpdateUI(option: UpdateUIOption, todo:ToDo? = nil) {
         
@@ -76,20 +80,6 @@ class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDe
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true, completion: nil)
-    }
-    
-    //Edit, Delete Actions Support
-    private func deleteActionHandler(actionView:UITableViewRowAction, indexPath:IndexPath) -> Void {
-        guard let todo = folder.getToDoAt(index: indexPath.item) else { return }
-        folder = self.dataManager.deleteToDo(todo)
-        todosTableView.deleteRows(at: [indexPath], with: .automatic)
-
-    }
-    
-    private func editActionHandler(actionView:UITableViewRowAction, indexPath:IndexPath) -> Void {
-        
-        guard let todo = folder.getToDoAt(index: indexPath.item) else { return }
-        showToDoListUpdateUI(option: .edit, todo: todo)
     }
     
     

@@ -28,18 +28,28 @@ class DataManager {
         saveContext(mainContext)
     }
     
+    func deleteFolder(_ folder:Folder) {
+        mainContext.delete(folder)
+        saveContext(mainContext)
+    }
+    
+    func updateFolder(_ folder:Folder, newName name:String) {
+        folder.name = name
+        saveContext(mainContext)
+    }
+    
+
+    func fetchResultControllerForFolders() -> NSFetchedResultsController<Folder> {
+        let sortDescriptors = [Folder.primarySortDescriptor()]
+        
+        return fetchResultsControllerFor(Folder.self, sortDescriptors: sortDescriptors) as! NSFetchedResultsController<Folder>
+    }
+    
     func createNewToDo(name:String, inFolder folder:Folder) {
         let toDoEntity = ToDo(context: mainContext)
         toDoEntity.name = name
         folder.addToTodos(toDoEntity)
         saveContext(mainContext)
-    }
-    
-    
-    func fetchResultControllerForFolders() -> NSFetchedResultsController<Folder> {
-        let sortDescriptors = [Folder.primarySortDescriptor()]
-        
-        return fetchResultsControllerFor(Folder.self, sortDescriptors: sortDescriptors) as! NSFetchedResultsController<Folder>
     }
     
     func deleteToDo(_ todo:ToDo) -> Folder {

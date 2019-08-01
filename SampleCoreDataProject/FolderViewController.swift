@@ -32,7 +32,7 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
     //MARK: - Actions
     
     @IBAction func addNewFolder(_ sender: Any) {        
-        showAddFolderUI()
+        showToDoListUpdateUI(option: .new)
     }
     //MARK: - Private
     
@@ -56,25 +56,46 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
         foldersTableView.reloadData()
     }
     
-    
-    private func showAddFolderUI() {
-        
-        let alertController = UIAlertController(title: "Add Folder", message: nil, preferredStyle: .alert)
-        alertController.addTextField { (textfield) in
-            textfield.placeholder = "Name"
-        }
-        
-        let addAction = UIAlertAction(title: "Add", style: .default) { [unowned self] (action) in
-            print("Add Folder with name \(alertController.textFields?.first?.text ?? "")")
-            guard let folderName = alertController.textFields?.first?.text else { return }
-            self.dataManager?.createNewFolder(name: folderName)
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alertController.addAction(addAction)
-        alertController.addAction(cancelAction)
 
+    private func showToDoListUpdateUI(option: UpdateUIOption, folder:Folder? = nil) {
+        
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        
+        let alertTitle:String
+        let defaultAction: UIAlertAction
+        switch option {
+        case .new:
+            alertTitle = "Add Folder"
+            defaultAction = UIAlertAction(title: "Add", style: .default) { [unowned self, unowned alertController](action) in
+                guard let folderName = alertController.textFields?.first?.text else { return }
+                self.dataManager?.createNewFolder(name: folderName)
+            }
+            
+        case .edit:
+            alertTitle = "Edit Folder"
+            defaultAction = UIAlertAction(title: "Save", style: .default) { [unowned self, unowned alertController](action) in
+                
+                guard let folder = folder, let folderName = alertController.textFields?.first?.text else { return }
+                
+                self.dataManager?.updateFolder(folder, newName: folderName)
+            }
+        }
+        
+        alertController.title = alertTitle
+        alertController.addTextField { [weak folder](textfield) in
+            textfield.placeholder = "Name"
+            if let folder = folder {
+                textfield.text = folder.name
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(defaultAction)
+        alertController.addAction(cancelAction)
+        
         present(alertController, animated: true, completion: nil)
     }
+
     
     //MARK: - UITableView Data Source
     
@@ -97,6 +118,28 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
         performSegue(withIdentifier: todosSegueID, sender: self)
     }
     
+    //MARK: Edit, Delete
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { [unowned self] (actionView:UITableViewRowAction,indexPath:IndexPath) in
+            
+            let folder = self.fetchResultsFolderController.object(at: indexPath)
+            self.dataManager?.deleteFolder(folder)
+        }
+        
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit") { [unowned self] (actionView:UITableViewRowAction,indexPath:IndexPath) in
+            
+            let folder = self.fetchResultsFolderController.object(at: indexPath)
+            self.showToDoListUpdateUI(option: .edit, folder: folder)
+        }
+        
+        return [deleteAction, editAction]
+    }
+    
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
     
     //MARK: - Fetched Results Controller Delegate
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
