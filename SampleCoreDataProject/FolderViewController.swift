@@ -18,7 +18,6 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
     private let folderCellIdentifier = "FolderCell"
     private let todosSegueID = "ShowTodos"
     
-    //private var folders:[Folder] = []
     
     @IBOutlet weak var foldersTableView: UITableView!
     //MARK: Lifecycle
@@ -69,7 +68,6 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
             print("Add Folder with name \(alertController.textFields?.first?.text ?? "")")
             guard let folderName = alertController.textFields?.first?.text else { return }
             self.dataManager?.createNewFolder(name: folderName)
-            //self.updateFodlers()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(addAction)

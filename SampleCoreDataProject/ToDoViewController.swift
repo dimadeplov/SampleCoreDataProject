@@ -47,7 +47,7 @@ class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDe
         switch option {
         case .new:
             alertTitle = "Add Task"
-            defaultAction = UIAlertAction(title: "Add", style: .default) { [unowned self](action) in
+            defaultAction = UIAlertAction(title: "Add", style: .default) { [unowned self, unowned alertController](action) in
                 guard let todoName = alertController.textFields?.first?.text else { return }
                 self.dataManager.createNewToDo(name: todoName, inFolder: self.folder)
                 self.updateTableView()
@@ -55,7 +55,8 @@ class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
         case .edit:
             alertTitle = "Edit Task"
-            defaultAction = UIAlertAction(title: "Save", style: .default) { [unowned self](action) in
+            defaultAction = UIAlertAction(title: "Save", style: .default) { [unowned self, unowned alertController](action) in
+                
                 guard let todo = todo, let todoName = alertController.textFields?.first?.text else { return }
                 self.dataManager.updateToDo(todo, newName: todoName)
                 self.updateTableView()
@@ -63,7 +64,7 @@ class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
      
         alertController.title = alertTitle
-        alertController.addTextField { (textfield) in
+        alertController.addTextField { [weak todo](textfield) in
             textfield.placeholder = "Name"
             if let todo = todo {
                 textfield.text = todo.name
@@ -120,8 +121,19 @@ class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK: Edit, Delete
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: deleteActionHandler)
-        let editAction = UITableViewRowAction(style: .normal, title: "Edit", handler: editActionHandler)
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { [unowned self] (actionView:UITableViewRowAction,indexPath:IndexPath) in
+            
+            guard let todo = self.folder.getToDoAt(index: indexPath.item) else { return }
+            self.folder = self.dataManager.deleteToDo(todo)
+            self.todosTableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        
+        
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit") { [unowned self] (actionView:UITableViewRowAction,indexPath:IndexPath) in
+            guard let todo = self.folder.getToDoAt(index: indexPath.item) else { return }
+            self.showToDoListUpdateUI(option: .edit, todo: todo)
+        }
+        
         return [deleteAction, editAction]
     }
     
