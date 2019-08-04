@@ -60,9 +60,17 @@ class DataManager {
         return folder
     }
     
-    func updateToDo(_ todo:ToDo, newName name:String) {
-        todo.name = name
-        saveContext(mainContext)
+    func updateToDo(_ todo:ToDo, newName:String?, done:Bool?) {
+        if let name = newName {
+            todo.name = name
+        }
+        if let done = done {
+            todo.done = done
+        }
+        
+        if todo.hasChanges {
+            saveContext(mainContext)
+        }
     }
     
     

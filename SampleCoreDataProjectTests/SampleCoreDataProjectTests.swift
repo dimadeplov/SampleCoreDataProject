@@ -131,10 +131,11 @@ class SampleCoreDataProjectTests: XCTestCase {
         
         do {
             let todo = try stack.managedObjectContext.fetch(ToDo.request)[0]
-            dataManager.updateToDo(todo, newName: "Updated ToDo Name")
+            dataManager.updateToDo(todo, newName: "Updated ToDo Name", done:!todo.done)
 
             let refetchedToDo = stack.managedObjectContext.object(with: todo.objectID) as? ToDo
             XCTAssertEqual(refetchedToDo?.name, todo.name)
+            XCTAssertEqual(refetchedToDo?.done, todo.done)
         }
         catch {
             XCTFail("Can't fetch ToDo error:\(error)")

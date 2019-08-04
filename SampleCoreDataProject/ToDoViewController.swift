@@ -62,7 +62,7 @@ class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDe
             defaultAction = UIAlertAction(title: "Save", style: .default) { [unowned self, unowned alertController](action) in
                 
                 guard let todo = todo, let todoName = alertController.textFields?.first?.text else { return }
-                self.dataManager.updateToDo(todo, newName: todoName)
+                self.dataManager.updateToDo(todo, newName: todoName, done: nil)
                 self.updateTableView()
             }
         }
@@ -103,8 +103,9 @@ class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let toDo = folder.getToDoAt(index: indexPath.item) else {return}
-        toDo.done = !toDo.done
-        tableView.reloadData()//.reloadRows(at: [indexPath], with: .automatic)
+        
+        dataManager.updateToDo(toDo, newName: nil, done: !toDo.done)
+        tableView.reloadData()
     }
     
     
