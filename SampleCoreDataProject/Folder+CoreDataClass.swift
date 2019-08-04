@@ -13,6 +13,8 @@ import CoreData
 @objc(Folder)
 public class Folder: NSManagedObject {
     
+    static let request: NSFetchRequest<Folder> = Folder.fetchRequest()
+    
     enum FolderSortDescriptors:String {
         case byCreationDate = "creationDate"
         case byName = "name"
@@ -34,6 +36,7 @@ public class Folder: NSManagedObject {
         return NSSortDescriptor(key: FolderSortDescriptors.byCreationDate.rawValue, ascending: false)
     }
     
+
     
     
     

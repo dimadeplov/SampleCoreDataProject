@@ -17,7 +17,6 @@ class DataManager {
     }
     
     
-    
     func getFolders() -> [Folder] {
         return getEntities(Folder.self)
     }
@@ -72,11 +71,9 @@ class DataManager {
     private func getEntities<EntityClass:NSManagedObject>(_ entityClass:EntityClass.Type) -> [EntityClass] {
     
         let fetchRequest = entityClass.fetchRequest()
-        
         var entities = [EntityClass]()
         do{
             entities = try self.mainContext.fetch(fetchRequest) as? [EntityClass] ?? []
-
         } catch let error as NSError{
             print(error)
         }

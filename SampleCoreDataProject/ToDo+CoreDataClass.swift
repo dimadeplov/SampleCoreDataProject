@@ -12,6 +12,9 @@ import CoreData
 
 @objc(ToDo)
 public class ToDo: NSManagedObject {
+
+    static let request: NSFetchRequest<ToDo> = ToDo.fetchRequest()
+
     public override func awakeFromInsert() {
         super.awakeFromInsert()
         self.creationDate = Date()

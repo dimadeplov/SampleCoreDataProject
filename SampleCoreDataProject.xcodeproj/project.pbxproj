@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A143E3622F595AD00094571 /* SampleCoreDataProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0ADB094F22E07FD0004F25EA /* SampleCoreDataProject.xcdatamodeld */; };
 		0A1C89C422E7262A00BE13E6 /* ToDo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1C89C022E7262A00BE13E6 /* ToDo+CoreDataClass.swift */; };
 		0A1C89C522E7262A00BE13E6 /* ToDo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1C89C122E7262A00BE13E6 /* ToDo+CoreDataProperties.swift */; };
 		0A1C89C622E7262A00BE13E6 /* Folder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1C89C222E7262A00BE13E6 /* Folder+CoreDataClass.swift */; };
@@ -21,6 +22,8 @@
 		0ADB095322E07FD2004F25EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0ADB095222E07FD2004F25EA /* Assets.xcassets */; };
 		0ADB095622E07FD2004F25EA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ADB095422E07FD2004F25EA /* LaunchScreen.storyboard */; };
 		0ADB096122E07FD2004F25EA /* SampleCoreDataProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADB096022E07FD2004F25EA /* SampleCoreDataProjectTests.swift */; };
+		0AE1D9CC22F650A900C6A99B /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE1D9CB22F650A900C6A99B /* TestingAppDelegate.swift */; };
+		0AE1D9CE22F6510800C6A99B /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE1D9CD22F6510800C6A99B /* main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +55,8 @@
 		0ADB095C22E07FD2004F25EA /* SampleCoreDataProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SampleCoreDataProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ADB096022E07FD2004F25EA /* SampleCoreDataProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleCoreDataProjectTests.swift; sourceTree = "<group>"; };
 		0ADB096222E07FD2004F25EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0AE1D9CB22F650A900C6A99B /* TestingAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
+		0AE1D9CD22F6510800C6A99B /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +120,7 @@
 				0ADB095422E07FD2004F25EA /* LaunchScreen.storyboard */,
 				0ADB095722E07FD2004F25EA /* Info.plist */,
 				0ADB094F22E07FD0004F25EA /* SampleCoreDataProject.xcdatamodeld */,
+				0AE1D9CD22F6510800C6A99B /* main.swift */,
 			);
 			path = SampleCoreDataProject;
 			sourceTree = "<group>";
@@ -123,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				0ADB096022E07FD2004F25EA /* SampleCoreDataProjectTests.swift */,
+				0AE1D9CB22F650A900C6A99B /* TestingAppDelegate.swift */,
 				0ADB096222E07FD2004F25EA /* Info.plist */,
 			);
 			path = SampleCoreDataProjectTests;
@@ -236,6 +243,7 @@
 				0A1C89C522E7262A00BE13E6 /* ToDo+CoreDataProperties.swift in Sources */,
 				0A1C89C722E7262A00BE13E6 /* Folder+CoreDataProperties.swift in Sources */,
 				0ADB094922E07FD0004F25EA /* AppDelegate.swift in Sources */,
+				0AE1D9CE22F6510800C6A99B /* main.swift in Sources */,
 				0A1C89C622E7262A00BE13E6 /* Folder+CoreDataClass.swift in Sources */,
 				0ADB095122E07FD0004F25EA /* SampleCoreDataProject.xcdatamodeld in Sources */,
 				0A1C89C422E7262A00BE13E6 /* ToDo+CoreDataClass.swift in Sources */,
@@ -246,6 +254,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AE1D9CC22F650A900C6A99B /* TestingAppDelegate.swift in Sources */,
+				0A143E3622F595AD00094571 /* SampleCoreDataProject.xcdatamodeld in Sources */,
 				0ADB096122E07FD2004F25EA /* SampleCoreDataProjectTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,8 +12,10 @@ import CoreData
 class CoreDataStack {
     
     private var persistentStoreDescription:NSPersistentStoreDescription?
-    init(persistentStoreDescription:NSPersistentStoreDescription? = nil) {
+    private var managedObjectModel:NSManagedObjectModel?
+    init(persistentStoreDescription:NSPersistentStoreDescription? = nil, model:NSManagedObjectModel? = nil) {
         self.persistentStoreDescription = persistentStoreDescription
+        self.managedObjectModel = model
     }
 
     
@@ -21,8 +23,14 @@ class CoreDataStack {
     
     private lazy var persistentContainer: NSPersistentContainer = {
         
-        let container = NSPersistentContainer(name: "SampleCoreDataProject")
-        
+        let container:NSPersistentContainer
+        if let objectModel = managedObjectModel {
+            container = NSPersistentContainer(name: "SampleCoreDataProject", managedObjectModel: objectModel)
+        }
+        else {
+            container = NSPersistentContainer(name: "SampleCoreDataProject")
+        }
+                
         if let storeDescription = persistentStoreDescription {
             container.persistentStoreDescriptions = [storeDescription]
         }

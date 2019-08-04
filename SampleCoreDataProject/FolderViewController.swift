@@ -11,8 +11,8 @@ import CoreData
 
 class FolderViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
     
-    weak var dataManager = (UIApplication.shared.delegate as? AppDelegate)!.dataManager
-    var fetchResultsFolderController:NSFetchedResultsController<Folder>!
+    weak var dataManager = (UIApplication.shared.delegate as? AppDelegate)?.dataManager
+    var fetchResultsFolderController:NSFetchedResultsController<Folder>?
     
     
     private let folderCellIdentifier = "FolderCell"
@@ -39,10 +39,10 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
     private func prepareFetchedResultController() {
         
         fetchResultsFolderController = dataManager?.fetchResultControllerForFolders()
-        fetchResultsFolderController.delegate = self
+        fetchResultsFolderController?.delegate = self
         
         do {
-            try fetchResultsFolderController.performFetch()
+            try fetchResultsFolderController?.performFetch()
         }
         catch {
             print("Failed to fetch with fetchResultsFolderCotnroller: \(error)")
@@ -100,14 +100,14 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
     //MARK: - UITableView Data Source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchResultsFolderController.sections?[section].numberOfObjects ?? 0
+        return fetchResultsFolderController?.sections?[section].numberOfObjects ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: folderCellIdentifier, for: indexPath)
         
-        let folder = fetchResultsFolderController.object(at: indexPath)
-        cell.textLabel?.text = folder.name
+        let folder = fetchResultsFolderController?.object(at: indexPath)
+        cell.textLabel?.text = folder?.name
         
         return cell
     }
@@ -123,14 +123,16 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { [unowned self] (actionView:UITableViewRowAction,indexPath:IndexPath) in
             
-            let folder = self.fetchResultsFolderController.object(at: indexPath)
-            self.dataManager?.deleteFolder(folder)
+            if let folder = self.fetchResultsFolderController?.object(at: indexPath) {
+                self.dataManager?.deleteFolder(folder)
+            }
         }
         
         let editAction = UITableViewRowAction(style: .normal, title: "Edit") { [unowned self] (actionView:UITableViewRowAction,indexPath:IndexPath) in
             
-            let folder = self.fetchResultsFolderController.object(at: indexPath)
-            self.showToDoListUpdateUI(option: .edit, folder: folder)
+            if let folder = self.fetchResultsFolderController?.object(at: indexPath){
+                self.showToDoListUpdateUI(option: .edit, folder: folder)
+            }
         }
         
         return [deleteAction, editAction]
@@ -152,7 +154,7 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
         if (segue.identifier == todosSegueID) {
             let toDoVC = (segue.destination as? ToDoViewController)
             toDoVC?.dataManager = self.dataManager
-            toDoVC?.folder = fetchResultsFolderController.object(at: foldersTableView.indexPathForSelectedRow!)
+            toDoVC?.folder = fetchResultsFolderController?.object(at: foldersTableView.indexPathForSelectedRow!)
 
         }
     }
