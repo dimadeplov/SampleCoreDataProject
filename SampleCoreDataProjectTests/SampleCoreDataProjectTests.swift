@@ -31,10 +31,11 @@ class SampleCoreDataProjectTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        func createStubFolder(folderName:String, todosNames:[String]?) {
+        func createStubFolder(folderName:String, description:String?, todosNames:[String]?) {
             
             let folder = Folder(context:stack.managedObjectContext)
             folder.name = folderName
+            folder.folderDescription = description
             if let todos = todosNames {
                 for name in todos {
                     let todo = ToDo(context: stack.managedObjectContext)
@@ -44,9 +45,9 @@ class SampleCoreDataProjectTests: XCTestCase {
             }
         }
         
-        createStubFolder(folderName: "Folder #1", todosNames: ["Todo #1","Todo #2","Todo #3"])
-        createStubFolder(folderName: "Folder #2", todosNames: nil)
-        createStubFolder(folderName: "Folder #3", todosNames: nil)
+        createStubFolder(folderName: "Folder #1", description: nil, todosNames: ["Todo #1","Todo #2","Todo #3"])
+        createStubFolder(folderName: "Folder #2", description: "Second Folder", todosNames: nil)
+        createStubFolder(folderName: "Folder #3", description: nil, todosNames: nil)
         do {
             try stack.managedObjectContext.save()
         }  catch {
@@ -76,7 +77,7 @@ class SampleCoreDataProjectTests: XCTestCase {
 
     
     func testCreateNewFolder() {
-        dataManager.createNewFolder(name: "Folder #4")
+        dataManager.createNewFolder(name: "Folder #4", description: "Description")
         XCTAssertEqual(numberOfFoldersInStore(), 4)
     }
     
@@ -90,11 +91,13 @@ class SampleCoreDataProjectTests: XCTestCase {
     func testUpdateFolder() {
         let folder = dataManager.getFolders()[0]
         let folderID = folder.objectID
-        dataManager.updateFolder(folder, newName: "Updated Folder Name")
+        dataManager.updateFolder(folder, newName: "Updated Folder Name", newFolderDescription: "Updated Description")
         
         let refetchedFolder = stack.managedObjectContext.object(with: folderID) as? Folder
 
         XCTAssertEqual(refetchedFolder?.name, folder.name)
+        XCTAssertEqual(refetchedFolder?.folderDescription, folder.folderDescription)
+
     }
     
     
