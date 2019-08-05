@@ -2,7 +2,7 @@
 //  Folder+CoreDataProperties.swift
 //  SampleCoreDataProject
 //
-//  Created by Dmitry Deplov on 25/07/2019.
+//  Created by Dmitry Deplov on 05/08/2019.
 //  Copyright © 2019 Dmitry Deplov. All rights reserved.
 //
 //
@@ -18,6 +18,7 @@ extension Folder {
     }
 
     @NSManaged public var creationDate: Date
+    @NSManaged public var folderDescription: String?
     @NSManaged public var name: String
     @NSManaged public var todos: NSOrderedSet?
 

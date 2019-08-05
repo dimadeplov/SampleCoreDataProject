@@ -67,17 +67,19 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
         case .new:
             alertTitle = "Add Folder"
             defaultAction = UIAlertAction(title: "Add", style: .default) { [unowned self, unowned alertController](action) in
-                guard let folderName = alertController.textFields?.first?.text else { return }
-                self.dataManager?.createNewFolder(name: folderName)
+                
+                guard let textfields = alertController.textFields, let name = textfields[0].text, !name.isEmpty else {return}
+                
+                let description = textfields[1].text
+                self.dataManager?.createNewFolder(name: name, description: description)
             }
             
         case .edit:
             alertTitle = "Edit Folder"
             defaultAction = UIAlertAction(title: "Save", style: .default) { [unowned self, unowned alertController](action) in
-                
-                guard let folder = folder, let folderName = alertController.textFields?.first?.text else { return }
-                
-                self.dataManager?.updateFolder(folder, newName: folderName)
+                guard let folder = folder, let folderName = alertController.textFields?[0].text, !folderName.isEmpty  else {return}
+
+                self.dataManager?.updateFolder(folder, newName: folderName, newFolderDescription: alertController.textFields?[1].text)
             }
         }
         
@@ -86,6 +88,13 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
             textfield.placeholder = "Name"
             if let folder = folder {
                 textfield.text = folder.name
+            }
+        }
+        
+        alertController.addTextField { [weak folder](textfield) in
+            textfield.placeholder = "Description"
+            if let folderDescription = folder?.folderDescription {
+                textfield.text = folderDescription
             }
         }
         
@@ -108,7 +117,7 @@ class FolderViewController: UIViewController, UITableViewDataSource, UITableView
         
         let folder = fetchResultsFolderController?.object(at: indexPath)
         cell.textLabel?.text = folder?.name
-        
+        cell.detailTextLabel?.text = folder?.folderDescription
         return cell
     }
 

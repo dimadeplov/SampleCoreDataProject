@@ -21,9 +21,11 @@ class DataManager {
         return getEntities(Folder.self)
     }
     
-    func createNewFolder(name:String) {
+    func createNewFolder(name:String, description:String?) {
         let folderEntity = Folder(context: mainContext)
+        
         folderEntity.name = name
+        folderEntity.folderDescription = description
         saveContext(mainContext)
     }
     
@@ -32,9 +34,18 @@ class DataManager {
         saveContext(mainContext)
     }
     
-    func updateFolder(_ folder:Folder, newName name:String) {
-        folder.name = name
-        saveContext(mainContext)
+    func updateFolder(_ folder:Folder, newName:String?, newFolderDescription:String?) {
+        if let name = newName {
+            folder.name = name
+        }
+        if let folderDescription = newFolderDescription {
+            folder.folderDescription = folderDescription
+        }
+        
+        if folder.hasChanges {
+            saveContext(mainContext)
+        }
+        
     }
     
 

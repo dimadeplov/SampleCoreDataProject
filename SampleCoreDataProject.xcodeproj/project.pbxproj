@@ -13,6 +13,7 @@
 		0A1C89C622E7262A00BE13E6 /* Folder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1C89C222E7262A00BE13E6 /* Folder+CoreDataClass.swift */; };
 		0A1C89C722E7262A00BE13E6 /* Folder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1C89C322E7262A00BE13E6 /* Folder+CoreDataProperties.swift */; };
 		0A1C89CB22E77A1800BE13E6 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1C89CA22E77A1800BE13E6 /* DataManager.swift */; };
+		0A3B15A822F7802B009A6FA2 /* SampleCoreDataProject_v.1_to_v.2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0A3B15A722F7802B009A6FA2 /* SampleCoreDataProject_v.1_to_v.2.xcmappingmodel */; };
 		0A43F1A722E0B463000ADB00 /* ToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A43F1A622E0B463000ADB00 /* ToDoViewController.swift */; };
 		0A43F1A922E0F233000ADB00 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A43F1A822E0F233000ADB00 /* CoreDataStack.swift */; };
 		0ADB094922E07FD0004F25EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADB094822E07FD0004F25EA /* AppDelegate.swift */; };
@@ -42,6 +43,8 @@
 		0A1C89C222E7262A00BE13E6 /* Folder+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Folder+CoreDataClass.swift"; path = "../Folder+CoreDataClass.swift"; sourceTree = "<group>"; };
 		0A1C89C322E7262A00BE13E6 /* Folder+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Folder+CoreDataProperties.swift"; path = "../Folder+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0A1C89CA22E77A1800BE13E6 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataManager.swift; path = ../DataManager.swift; sourceTree = "<group>"; };
+		0A3B15A622F76781009A6FA2 /* SampleCoreDataProject v.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SampleCoreDataProject v.2.xcdatamodel"; sourceTree = "<group>"; };
+		0A3B15A722F7802B009A6FA2 /* SampleCoreDataProject_v.1_to_v.2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = SampleCoreDataProject_v.1_to_v.2.xcmappingmodel; sourceTree = "<group>"; };
 		0A43F1A622E0B463000ADB00 /* ToDoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoViewController.swift; sourceTree = "<group>"; };
 		0A43F1A822E0F233000ADB00 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = ../CoreDataStack.swift; sourceTree = "<group>"; };
 		0ADB094522E07FD0004F25EA /* SampleCoreDataProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleCoreDataProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,6 +123,7 @@
 				0ADB095422E07FD2004F25EA /* LaunchScreen.storyboard */,
 				0ADB095722E07FD2004F25EA /* Info.plist */,
 				0ADB094F22E07FD0004F25EA /* SampleCoreDataProject.xcdatamodeld */,
+				0A3B15A722F7802B009A6FA2 /* SampleCoreDataProject_v.1_to_v.2.xcmappingmodel */,
 				0AE1D9CD22F6510800C6A99B /* main.swift */,
 			);
 			path = SampleCoreDataProject;
@@ -244,6 +248,7 @@
 				0A1C89C722E7262A00BE13E6 /* Folder+CoreDataProperties.swift in Sources */,
 				0ADB094922E07FD0004F25EA /* AppDelegate.swift in Sources */,
 				0AE1D9CE22F6510800C6A99B /* main.swift in Sources */,
+				0A3B15A822F7802B009A6FA2 /* SampleCoreDataProject_v.1_to_v.2.xcmappingmodel in Sources */,
 				0A1C89C622E7262A00BE13E6 /* Folder+CoreDataClass.swift in Sources */,
 				0ADB095122E07FD0004F25EA /* SampleCoreDataProject.xcdatamodeld in Sources */,
 				0A1C89C422E7262A00BE13E6 /* ToDo+CoreDataClass.swift in Sources */,
@@ -520,9 +525,10 @@
 		0ADB094F22E07FD0004F25EA /* SampleCoreDataProject.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				0A3B15A622F76781009A6FA2 /* SampleCoreDataProject v.2.xcdatamodel */,
 				0ADB095022E07FD0004F25EA /* SampleCoreDataProject.xcdatamodel */,
 			);
-			currentVersion = 0ADB095022E07FD0004F25EA /* SampleCoreDataProject.xcdatamodel */;
+			currentVersion = 0A3B15A622F76781009A6FA2 /* SampleCoreDataProject v.2.xcdatamodel */;
 			path = SampleCoreDataProject.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

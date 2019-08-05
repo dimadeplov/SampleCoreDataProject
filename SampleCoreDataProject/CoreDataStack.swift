@@ -34,7 +34,11 @@ class CoreDataStack {
         if let storeDescription = persistentStoreDescription {
             container.persistentStoreDescriptions = [storeDescription]
         }
-       
+        else {
+            container.persistentStoreDescriptions.first?.shouldInferMappingModelAutomatically = false
+        }
+        
+        
         
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in

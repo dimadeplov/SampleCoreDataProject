@@ -52,7 +52,7 @@ class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDe
         case .new:
             alertTitle = "Add Task"
             defaultAction = UIAlertAction(title: "Add", style: .default) { [unowned self, unowned alertController](action) in
-                guard let todoName = alertController.textFields?.first?.text else { return }
+                guard let todoName = alertController.textFields?.first?.text, !todoName.isEmpty else { return }
                 self.dataManager.createNewToDo(name: todoName, inFolder: self.folder)
                 self.updateTableView()
             }
@@ -61,7 +61,7 @@ class ToDoViewController: UIViewController, UITableViewDataSource, UITableViewDe
             alertTitle = "Edit Task"
             defaultAction = UIAlertAction(title: "Save", style: .default) { [unowned self, unowned alertController](action) in
                 
-                guard let todo = todo, let todoName = alertController.textFields?.first?.text else { return }
+                guard let todo = todo, let todoName = alertController.textFields?.first?.text, !todoName.isEmpty else { return }
                 self.dataManager.updateToDo(todo, newName: todoName, done: nil)
                 self.updateTableView()
             }
